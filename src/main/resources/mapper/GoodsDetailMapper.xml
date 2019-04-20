@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.dao.GoodsDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.example.entity.GoodsDetail" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="goodsId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="specName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="stockNum" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="unitPrice" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="updatetime" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="createtime" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, goodsId, specName, stockNum, unitPrice, updatetime, createtime
+  </sql>
+  <!--通过商品id查询商品所有规格-->
+  <select id="selectByGoodsId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_goodsdetail where goodsId = #{goodsId}
+  </select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.entity.GoodsDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_goodsdetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_goodsdetail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_goodsdetail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.entity.GoodsDetailExample" >
+    delete from tb_goodsdetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.entity.GoodsDetail" >
+--   插入数据后返回主键
+    <selectKey keyProperty="id" resultType="java.lang.Long">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_goodsdetail (id, goodsId, specName, 
+      stockNum, unitPrice, updatetime, 
+      createtime)
+    values (#{id,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{specname,jdbcType=VARCHAR}, 
+      #{stocknum,jdbcType=INTEGER}, #{unitprice,jdbcType=REAL}, #{updatetime,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.entity.GoodsDetail" >
+    insert into tb_goodsdetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsid != null" >
+        goodsId,
+      </if>
+      <if test="specname != null" >
+        specName,
+      </if>
+      <if test="stocknum != null" >
+        stockNum,
+      </if>
+      <if test="unitprice != null" >
+        unitPrice,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsid != null" >
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="specname != null" >
+        #{specname,jdbcType=VARCHAR},
+      </if>
+      <if test="stocknum != null" >
+        #{stocknum,jdbcType=INTEGER},
+      </if>
+      <if test="unitprice != null" >
+        #{unitprice,jdbcType=REAL},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.entity.GoodsDetailExample" resultType="java.lang.Integer" >
+    select count(*) from tb_goodsdetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_goodsdetail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsid != null" >
+        goodsId = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.specname != null" >
+        specName = #{record.specname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stocknum != null" >
+        stockNum = #{record.stocknum,jdbcType=INTEGER},
+      </if>
+      <if test="record.unitprice != null" >
+        unitPrice = #{record.unitprice,jdbcType=REAL},
+      </if>
+      <if test="record.updatetime != null" >
+        updatetime = #{record.updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_goodsdetail
+    set id = #{record.id,jdbcType=BIGINT},
+      goodsId = #{record.goodsid,jdbcType=BIGINT},
+      specName = #{record.specname,jdbcType=VARCHAR},
+      stockNum = #{record.stocknum,jdbcType=INTEGER},
+      unitPrice = #{record.unitprice,jdbcType=REAL},
+      updatetime = #{record.updatetime,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.entity.GoodsDetail" >
+    update tb_goodsdetail
+    <set >
+      <if test="goodsid != null" >
+        goodsId = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="specname != null" >
+        specName = #{specname,jdbcType=VARCHAR},
+      </if>
+      <if test="stocknum != null" >
+        stockNum = #{stocknum,jdbcType=INTEGER},
+      </if>
+      <if test="unitprice != null" >
+        unitPrice = #{unitprice,jdbcType=REAL},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.entity.GoodsDetail" >
+    update tb_goodsdetail
+    set goodsId = #{goodsid,jdbcType=BIGINT},
+      specName = #{specname,jdbcType=VARCHAR},
+      stockNum = #{stocknum,jdbcType=INTEGER},
+      unitPrice = #{unitprice,jdbcType=REAL},
+      updatetime = #{updatetime,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
