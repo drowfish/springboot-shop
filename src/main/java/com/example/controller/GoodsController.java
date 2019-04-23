@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,21 @@ public class GoodsController {
     public Result getGoodsByType(Long typeId){
         List<Goods> list = goodsService.getGoodsByType(typeId);
         return new Result(StateAndMessage.SUCCESS,StateAndMessage.GETGOODSBYTYPESUCCESS,list);
+    }
+
+    @RequestMapping("/getClientGoodsByType")
+    public Result getClientGoodsByType(Long typeId){
+        List<Goods> list;
+        if(typeId == -1){
+            list = goodsService.getAllGoods();
+        }else{
+            list = goodsService.getGoodsByType(typeId);
+        }
+        List<GoodsInfo> goodsInfos = new ArrayList<>();
+        for(Goods goods: list){
+            goodsInfos.add(goodsService.getGoodsInfo(goods.getId()));
+        }
+        return new Result(StateAndMessage.SUCCESS,StateAndMessage.GETGOODSBYTYPESUCCESS,goodsInfos);
     }
 
     @RequestMapping("/deleteGoods")
@@ -107,6 +123,6 @@ public class GoodsController {
         if(flag > 0){
             return new Result(StateAndMessage.SUCCESS,StateAndMessage.ADDSCUESS,null);
         }
-        return new Result();
+        return new Result(StateAndMessage.FAIL,StateAndMessage.ADDFAIL,null);
     }
 }

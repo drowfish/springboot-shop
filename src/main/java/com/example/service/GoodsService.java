@@ -36,4 +36,10 @@ public class GoodsService {
     public int updateGoods(Goods goods){
         return goodsMapper.updateByPrimaryKeySelective(goods);
     }
+
+    public List<Goods> getAllGoods(){
+        GoodsExample goodsExample = new GoodsExample();
+        goodsExample.setOrderByClause("id ASC");
+        return goodsMapper.selectByExampleWithBLOBs(goodsExample);
+    }
 }
