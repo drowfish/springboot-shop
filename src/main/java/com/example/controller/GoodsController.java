@@ -125,4 +125,10 @@ public class GoodsController {
         }
         return new Result(StateAndMessage.FAIL,StateAndMessage.ADDFAIL,null);
     }
+
+    @RequestMapping("/searchGoods")
+    public Result searchGoods(String keyword){
+        List<GoodsInfo> list = goodsService.searchGoods(keyword);
+        return new Result(StateAndMessage.SUCCESS,"",list);
+    }
 }

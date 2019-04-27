@@ -13,13 +13,19 @@ public class Comment {
 
     private String content;
 
-    public Comment(Long id, Long userid, Long goodsid, Long goodsdetailid, Long orderid, String content) {
+    private Integer score;
+
+    private String createtime;
+
+    public Comment(Long id, Long userid, Long goodsid, Long goodsdetailid, Long orderid, String content, Integer score, String createtime) {
         this.id = id;
         this.userid = userid;
         this.goodsid = goodsid;
         this.goodsdetailid = goodsdetailid;
         this.orderid = orderid;
         this.content = content;
+        this.score = score;
+        this.createtime = createtime;
     }
 
     public Comment() {
@@ -72,5 +78,21 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public String getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime == null ? null : createtime.trim();
     }
 }

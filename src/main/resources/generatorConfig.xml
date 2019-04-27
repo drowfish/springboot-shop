@@ -70,8 +70,8 @@
             domainObjectName:指定了实体类的名称
         -->
         <!--<table tableName="tb_admin" domainObjectName="Admin"></table>-->
-        <!--<table tableName="tb_comment" domainObjectName="Comment"></table>-->
-        <table tableName="tb_goods" domainObjectName="Goods"></table>
+        <table tableName="tb_comment" domainObjectName="Comment"></table>
+        <!--<table tableName="tb_goods" domainObjectName="Goods"></table>-->
         <!--<table tableName="tb_goodsDetail" domainObjectName="GoodsDetail"></table>-->
         <!--<table tableName="tb_message" domainObjectName="Message"></table>-->
         <!--<table tableName="tb_order" domainObjectName="Order"></table>-->

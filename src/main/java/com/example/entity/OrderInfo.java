@@ -1,11 +1,13 @@
 package com.example.entity;
 
-public class Order {
+public class OrderInfo {
     private Long id;
 
-    private Long userid;
+    private User user;
 
-    private Long goodsdetailid;
+    private GoodsInfo goodsInfo;
+
+    private GoodsDetail goodsDetail;
 
     private Integer goodsnum;
 
@@ -13,23 +15,26 @@ public class Order {
 
     private Integer state;//0：未付款 1：已付款未发货 2：待收货 3：已完成
 
+    private boolean hasComment;
+
     private String updatetime;
 
     private String createtime;
 
-    public Order(Long id, Long userid, Long goodsdetailid, Integer goodsnum, Float amount, Integer state, String updatetime, String createtime) {
+    public OrderInfo(Long id, User user, GoodsInfo goodsInfo, GoodsDetail goodsDetail, Integer goodsnum, Float amount, Integer state, boolean hasComment, String updatetime, String createtime) {
         this.id = id;
-        this.userid = userid;
-        this.goodsdetailid = goodsdetailid;
+        this.user = user;
+        this.goodsInfo = goodsInfo;
+        this.goodsDetail = goodsDetail;
         this.goodsnum = goodsnum;
         this.amount = amount;
         this.state = state;
+        this.hasComment = hasComment;
         this.updatetime = updatetime;
         this.createtime = createtime;
     }
 
-    public Order() {
-        super();
+    public OrderInfo() {
     }
 
     public Long getId() {
@@ -40,20 +45,28 @@ public class Order {
         this.id = id;
     }
 
-    public Long getUserid() {
-        return userid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserid(Long userid) {
-        this.userid = userid;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Long getGoodsdetailid() {
-        return goodsdetailid;
+    public GoodsInfo getGoodsInfo() {
+        return goodsInfo;
     }
 
-    public void setGoodsdetailid(Long goodsdetailid) {
-        this.goodsdetailid = goodsdetailid;
+    public void setGoodsInfo(GoodsInfo goodsInfo) {
+        this.goodsInfo = goodsInfo;
+    }
+
+    public GoodsDetail getGoodsDetail() {
+        return goodsDetail;
+    }
+
+    public void setGoodsDetail(GoodsDetail goodsDetail) {
+        this.goodsDetail = goodsDetail;
     }
 
     public Integer getGoodsnum() {
@@ -85,7 +98,7 @@ public class Order {
     }
 
     public void setUpdatetime(String updatetime) {
-        this.updatetime = updatetime == null ? null : updatetime.trim();
+        this.updatetime = updatetime;
     }
 
     public String getCreatetime() {
@@ -93,20 +106,14 @@ public class Order {
     }
 
     public void setCreatetime(String createtime) {
-        this.createtime = createtime == null ? null : createtime.trim();
+        this.createtime = createtime;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", userid=" + userid +
-                ", goodsdetailid=" + goodsdetailid +
-                ", goodsnum=" + goodsnum +
-                ", amount=" + amount +
-                ", state=" + state +
-                ", updatetime='" + updatetime + '\'' +
-                ", createtime='" + createtime + '\'' +
-                '}';
+    public boolean isHasComment() {
+        return hasComment;
+    }
+
+    public void setHasComment(boolean hasComment) {
+        this.hasComment = hasComment;
     }
 }

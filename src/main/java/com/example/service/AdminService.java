@@ -20,4 +20,8 @@ public class AdminService {
         criteria.andAccountEqualTo(account);
         return adminMapper.selectByExample(adminExample);
     }
+
+    public void changePwd(Admin admin){
+        adminMapper.updateByPrimaryKeySelective(admin);
+    }
 }

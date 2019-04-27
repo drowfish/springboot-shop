@@ -23,6 +23,7 @@ public class GoodsDetailController {
     @Resource
     private GoodsDetailService goodsDetailService;
 
+    @RequestMapping("/addSpec")
     public Result addSpec(@RequestBody GoodsDetail goodsDetail){
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -37,6 +38,7 @@ public class GoodsDetailController {
         return new Result(StateAndMessage.FAIL,StateAndMessage.ADDFAIL,null);
     }
 
+    @RequestMapping("/deleteSpec")
     public Result deleteSpec(Long id){
         int flag = goodsDetailService.deleteSpec(id);
         if(flag > 0){

@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.dao.GoodsDetailMapper;
 import com.example.entity.GoodsDetail;
+import com.example.entity.GoodsDetailExample;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,4 +26,15 @@ public class GoodsDetailService {
         return goodsDetailMapper.updateByPrimaryKeySelective(goodsDetail);
     }
 
+    public GoodsDetail getGoodsDetailById(Long id){
+        return goodsDetailMapper.selectByPrimaryKey(id);
+    }
+
+    public List<GoodsDetail> getGoodsDetailByGoodsId(Long goodsid){
+        GoodsDetailExample goodsDetailExample = new GoodsDetailExample();
+        GoodsDetailExample.Criteria criteria = goodsDetailExample.createCriteria();
+        criteria.andGoodsidEqualTo(goodsid);
+        List<GoodsDetail> list = goodsDetailMapper.selectByExample(goodsDetailExample);
+        return list;
+    }
 }

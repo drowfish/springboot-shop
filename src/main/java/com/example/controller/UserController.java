@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,7 +27,8 @@ public class UserController {
 
     //用户登录
     @RequestMapping("/login")
-    public Result login(@RequestBody User user){
+    public Result login(@RequestBody User user, HttpSession session){
+        System.out.println("loginSession:"+session);
         List<User> list = userService.getUserByEmail(user.getEmail());
         Map<String,String> map = new HashMap<>();
         if(list.isEmpty()){
@@ -36,6 +38,7 @@ public class UserController {
                 return new Result(StateAndMessage.FAIL,StateAndMessage.LOGINFAILBYPWD,null);
             }
         }
+        session.setAttribute("id",list.get(0).getId());
         map.put("name",list.get(0).getNickname());
         String token = JwtUtil.getToken(list.get(0).getEmail());
         map.put("token","Bearer:"+token);
@@ -90,9 +93,19 @@ public class UserController {
     @RequestMapping("/searchUser")
     public Result searchUser(String word){
         List<User> list = userService.searchUser(word);
-        if(list.isEmpty()){
-            return new Result(StateAndMessage.FAIL,StateAndMessage.SEARCHUSERFALI,list);
-        }
         return new Result(StateAndMessage.SUCCESS,StateAndMessage.SEARCHUSERSUCCESS,list);
+    }
+
+    @RequestMapping("/getUserDate")
+    public Result getUserDate(HttpSession session){
+        Long id = (Long)session.getAttribute("id");
+        User user = userService.getUserById(id);
+        return new Result(StateAndMessage.SUCCESS,"",user);
+    }
+
+    @RequestMapping("/updateUserData")
+    public Result updateUserData(@RequestBody User user){
+        userService.updateUserData(user);
+        return new Result(StateAndMessage.SUCCESS,"",null);
     }
 }
